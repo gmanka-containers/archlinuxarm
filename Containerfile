@@ -38,6 +38,7 @@ RUN \
 	echo "en_US.UTF-8 UTF-8" > /rootfs/etc/locale.gen && \
 	echo "LANG=en_US.UTF-8" > /rootfs/etc/locale.conf && \
 	chroot /rootfs locale-gen && \
+	sed -i "s/^CheckSpace/#CheckSpace/" /rootfs/etc/pacman.conf && \
 	rm -rf /rootfs/var/lib/pacman/sync/* /rootfs/files
 
 FROM scratch
@@ -50,3 +51,4 @@ RUN \
 	rm -rf /etc/pacman.d/gnupg/{openpgp-revocs.d/,private-keys-v1.d/,pubring.gpg~,gnupg.S.}*
 
 CMD ["/usr/bin/bash"]
+
