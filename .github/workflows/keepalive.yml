@@ -1,0 +1,21 @@
+permissions:
+  contents: write
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: '0 0 1 * *'
+jobs:
+  keepalive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          git config user.name keepalive-bot
+          git config user.email zalupa@gmail.com
+          date -u +"%Y-%m-%dT%H:%M:%SZ" > files/keepalive
+          git add files/keepalive
+          git commit -m "[u] keepalive"
+          git push "https://x-access-token:${token}@github.com/${{ github.repository }}" main
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
