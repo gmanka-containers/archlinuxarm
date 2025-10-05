@@ -9,14 +9,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: latest
+          fetch-depth: 0
       - run: |
-          git pull
+          git fetch origin latest
+          git checkout -B latest origin/latest
+          git pull --ff-only
           git config user.name keepalive-bot
           git config user.email action@github.com
-          date -u +"%Y-%m-%dT%H:%M:%SZ" > files/keepalive
-          git add files/keepalive
+          date -u +"%Y-%m-%dT%H:%M:%SZ" > .github/keepalive
+          git add .github/keepalive
           git commit -m "[u] keepalive"
-          git push "https://x-access-token:${token}@github.com/${{ github.repository }}" latest
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+          git push origin HEAD:latest
