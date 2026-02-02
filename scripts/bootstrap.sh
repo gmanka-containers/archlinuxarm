@@ -2,6 +2,8 @@
 
 set -uexo pipefail
 
+rm -f /etc/apt/apt.conf.d/docker-clean
+echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/keep-cache
 apt update
 apt install -y --no-install-recommends arch-install-scripts pacman-package-manager makepkg curl ca-certificates xz-utils zstd
 cat /scripts/$TARGETARCH/repos.conf | tee -a /etc/pacman.conf

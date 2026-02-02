@@ -3,7 +3,10 @@ FROM docker.io/debian:latest AS bootstrapper
 ARG TARGETARCH
 ARG PACKAGE_GROUP=base
 COPY scripts /scripts
-RUN bash /scripts/bootstrap.sh
+RUN --mount=type=cache,target=/var/cache/apt \
+    --mount=type=cache,target=/var/lib/apt/lists \
+    --mount=type=cache,target=/rootfs/var/cache/pacman/pkg \
+    bash /scripts/bootstrap.sh
 
 FROM scratch
 COPY --from=bootstrapper /rootfs/ /
