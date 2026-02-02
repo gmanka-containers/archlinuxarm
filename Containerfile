@@ -3,10 +3,10 @@ FROM docker.io/debian:latest AS bootstrapper
 ARG TARGETARCH
 ARG PACKAGE_GROUP=base
 COPY scripts /scripts
-RUN --mount=type=cache,target=/var/cache/apt \
-    --mount=type=cache,target=/var/lib/apt/lists \
-    --mount=type=cache,target=/rootfs/var/cache/pacman/pkg \
-    --mount=type=cache,target=/rootfs/var/lib/pacman/sync \
+RUN --mount=type=cache,id=apt-cache-$TARGETARCH,target=/var/cache/apt \
+    --mount=type=cache,id=apt-lists-$TARGETARCH,target=/var/lib/apt/lists \
+    --mount=type=cache,id=pacman-pkg-$TARGETARCH,target=/rootfs/var/cache/pacman/pkg \
+    --mount=type=cache,id=pacman-sync-$TARGETARCH,target=/rootfs/var/lib/pacman/sync \
     bash /scripts/bootstrap.sh
 
 FROM scratch
