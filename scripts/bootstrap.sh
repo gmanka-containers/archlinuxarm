@@ -10,11 +10,11 @@ mkdir -p /etc/pacman.d
 source /scripts/$TARGETARCH/helper.sh
 pacman-key --init
 pacman-key --populate
-mkdir /rootfs
+mkdir -p /rootfs
 mkdir -m 0755 -p /rootfs/var/{cache/pacman/pkg,lib/pacman,log} /rootfs/{dev,run,etc}
 mkdir -m 1777 -p /rootfs/tmp
 mkdir -m 0555 -p /rootfs/{sys,proc}
-pacman -r /rootfs -Sy --noconfirm $PACKAGE_GROUP $BOOTSTRAP_EXTRA_PACKAGES
+pacman -r /rootfs -Sy --noconfirm $PACKAGE_GROUP $BOOTSTRAP_EXTRA_PACKAGES iptables-nft
 cp /etc/pacman.d/mirrorlist /rootfs/etc/pacman.d/mirrorlist
 echo 'en_US.UTF-8 UTF-8' | tee /rootfs/etc/locale.gen
 echo 'LANG=en_US.UTF-8' | tee /rootfs/etc/locale.conf
