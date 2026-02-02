@@ -1,5 +1,6 @@
 export MIRRORLIST_URL="https://raw.githubusercontent.com/felixonmars/archriscv-packages/master/pacman-mirrorlist/mirrorlist"
 export BOOTSTRAP_EXTRA_PACKAGES=''
+export PACMAN_ARCH='riscv64'
 
 mkdir /tmp/archlinux-keyring
 curl -L https://archlinux.org/packages/core/any/archlinux-keyring/download | unzstd | tar -C /tmp/archlinux-keyring -xv

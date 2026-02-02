@@ -10,6 +10,7 @@ cat /scripts/$TARGETARCH/repos.conf | tee -a /etc/pacman.conf
 sed -i 's/^CheckSpace/#CheckSpace/' /etc/pacman.conf
 mkdir -p /etc/pacman.d
 source /scripts/$TARGETARCH/helper.sh
+sed -i "s/^Architecture.*/Architecture = ${PACMAN_ARCH}/" /etc/pacman.conf
 pacman-key --init
 pacman-key --populate
 mkdir -p /rootfs
