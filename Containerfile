@@ -6,6 +6,7 @@ COPY scripts /scripts
 RUN --mount=type=cache,target=/var/cache/apt \
     --mount=type=cache,target=/var/lib/apt/lists \
     --mount=type=cache,target=/rootfs/var/cache/pacman/pkg \
+    --mount=type=cache,target=/rootfs/var/lib/pacman/sync \
     bash /scripts/bootstrap.sh
 
 FROM scratch
